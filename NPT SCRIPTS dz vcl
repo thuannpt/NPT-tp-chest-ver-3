@@ -1,1 +1,258 @@
-# NPT-tp-chest-ver-3
+game.StarterGui:SetCore("SendNotification",  {
+ Title = "ytb :NPT Script";
+ Text = "Script create by npt Script and hieu Nếu bạn review hãy để nguồn ";
+ Duration = 9e9;
+ Button1 = "OK ";
+ Callback = NotificationBindable;
+})
+
+local function CreateInstance(cls,props)
+         local inst = Instance.new(cls)
+         for i,v in pairs(props) do
+         inst[i] = v
+         end
+         return inst
+         end
+         
+         local Clocker = CreateInstance('ScreenGui',{DisplayOrder=0,Enabled=true,ResetOnSpawn=true,Name='Clocker', Parent=game.CoreGui})
+         local background = CreateInstance('ImageLabel',{Image='rbxassetid://2851926732',ImageColor3=Color3.new(0.117647, 0.117647, 0.117647),ImageRectOffset=Vector2.new(0, 0),ImageRectSize=Vector2.new(0, 0),ImageTransparency=0,ScaleType=Enum.ScaleType.Slice,SliceCenter=Rect.new(12, 12, 12, 12),Active=false,AnchorPoint=Vector2.new(0.5, 0.5),BackgroundColor3=Color3.new(1, 1, 1),BackgroundTransparency=1,BorderColor3=Color3.new(0.105882, 0.164706, 0.207843),BorderSizePixel=1,ClipsDescendants=true,Draggable=false,Position=UDim2.new(0.0424528308, 0, 0.0470347628, 0),Rotation=0,Selectable=false,Size=UDim2.new(0, 70, 0, 28),SizeConstraint=Enum.SizeConstraint.RelativeXY,Visible=true,ZIndex=1,Name='background',Parent = Clocker})
+         local timerlabel = CreateInstance('TextLabel',{Font=Enum.Font.SourceSans,FontSize=Enum.FontSize.Size14,Text='Timer',TextColor3=Color3.new(1, 1, 1),TextScaled=false,TextSize=14,TextStrokeColor3=Color3.new(0, 0, 0),TextStrokeTransparency=1,TextTransparency=0,TextWrapped=false,TextXAlignment=Enum.TextXAlignment.Center,TextYAlignment=Enum.TextYAlignment.Center,Active=false,AnchorPoint=Vector2.new(0, 0),BackgroundColor3=Color3.new(1, 1, 1),BackgroundTransparency=1,BorderColor3=Color3.new(0.105882, 0.164706, 0.207843),BorderSizePixel=1,ClipsDescendants=false,Draggable=false,Position=UDim2.new(0, 0, 0, 0),Rotation=0,Selectable=false,Size=UDim2.new(0, 70, 0, 13),SizeConstraint=Enum.SizeConstraint.RelativeXY,Visible=true,ZIndex=1,Name='timerlabel',Parent = background})
+         local timer = CreateInstance('TextLabel',{Font=Enum.Font.SourceSans,FontSize=Enum.FontSize.Size14,Text='0:0:0',TextColor3=Color3.new(1, 1, 1),TextScaled=false,TextSize=14,TextStrokeColor3=Color3.new(0, 0, 0),TextStrokeTransparency=1,TextTransparency=0,TextWrapped=false,TextXAlignment=Enum.TextXAlignment.Center,TextYAlignment=Enum.TextYAlignment.Center,Active=false,AnchorPoint=Vector2.new(0, 0),BackgroundColor3=Color3.new(1, 1, 1),BackgroundTransparency=1,BorderColor3=Color3.new(0.105882, 0.164706, 0.207843),BorderSizePixel=1,ClipsDescendants=false,Draggable=false,Position=UDim2.new(0, 0, 0.535714269, 0),Rotation=0,Selectable=false,Size=UDim2.new(0, 70, 0, 13),SizeConstraint=Enum.SizeConstraint.RelativeXY,Visible=true,ZIndex=1,Name='timer',Parent = background})
+         spawn(function()
+         while wait()do
+            local scripttime=game.Workspace.DistributedGameTime
+            local seconds = scripttime%60
+            local minutes = math.floor(scripttime/60%60)
+            local hours = math.floor(scripttime/3600)
+            local tempo = string.format("%.0f:%.0f:%.0f", hours ,minutes, seconds)
+            timer.Text = tempo
+         end end)
+         
+getgenv().Server_Hop = true
+getgenv().Chest_Farm = true
+getgenv().wait_Time = 35 -- Seconds
+
+local placeId = game.PlaceId
+if placeId == 2753915549 or placeId == 4442272183 or placeId == 7449423635 then
+repeat wait() until game:IsLoaded() ~= false
+
+local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+
+local g = game
+
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+
+local Counter = 0
+local PlaceID = game.PlaceId
+     local AllIDs = {}
+     local foundAnything = ""
+     local actualHour = os.date("!*t").hour
+     local Deleted = false
+
+     local File = pcall(function()
+         AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+     end)
+     if not File then
+         table.insert(AllIDs, actualHour)
+         writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+     end
+    
+     function TPReturner()
+         local Site;
+         if foundAnything == "" then
+             Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+         else
+             Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+         end
+         local ID = ""
+         if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+             foundAnything = Site.nextPageCursor
+         end
+         local num = 0;
+         for i,v in pairs(Site.data) do
+             local Possible = true
+             ID = tostring(v.id)
+             if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                 for _,Existing in pairs(AllIDs) do
+                     if num ~= 0 then
+                         if ID == tostring(Existing) then
+                             Possible = false
+                         end
+                     else
+                         if tonumber(actualHour) ~= tonumber(Existing) then
+                             local delFile = pcall(function()
+                                delfile("NotSameServers.json")
+                                 AllIDs = {}
+                                 table.insert(AllIDs, actualHour)
+                             end)
+                         end
+                     end
+                     num = num + 1
+                 end
+                 if Possible == true then
+                     table.insert(AllIDs, ID)
+                     wait()
+                     pcall(function()
+                         writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                         wait()
+                         game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                     end)
+                     wait(4)
+                 end
+             end
+         end
+     end
+ 
+     function Teleport()
+        while wait() do
+            pcall(function()
+                 TPReturner()
+                 if foundAnything ~= "" then
+                     TPReturner()
+                 end
+            end)
+        end
+     end
+
+     spawn(function()
+        local ohString1 = "SetTeam"
+        local ohString2 = "Pirates"
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
+     end)
+
+spawn(function()
+    while wait() do
+        if Server_Hop then
+            pcall(function()
+                        wait(wait_Time)
+                        Teleport()
+                        print("Finding new server")
+            end)
+        end
+    end
+end)
+
+
+end
+
+if Possible == true then
+                     table.insert(AllIDs, ID)
+                     wait()
+                     pcall(function()
+                         writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                         wait()
+                         game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                     end)
+                     wait(4)
+                 end
+        
+     function Teleport()
+        while wait() do
+            pcall(function()
+                 TPReturner()
+                 if foundAnything ~= "" then
+                     TPReturner()
+                 end
+            end)
+        end
+     end
+
+     spawn(function()
+        local ohString1 = "SetTeam"
+        local ohString2 = "Pirates"
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
+     end)
+
+_G.on = not _G.on
+local plr = game.Players.LocalPlayer
+while _G.on and wait() do
+    pcall(function()
+		if not plr.Character:FindFirstChild("Head") then
+			for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+				if string.find(v.Name, "Chest") then
+					print(v.Name)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+				end
+			end
+		else
+		    
+		    spawn(function()
+   while wait(.8) do
+      if Chest_Farm then
+          pcall(function()
+  
+  for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+      if string.find(v.Name, "Chest") then
+          print(v.Name)
+          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+          wait(.15)
+      end
+  end
+  game.Players.LocalPlayer.Character.Head:Destroy()
+  for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+   if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
+   firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
+   wait()
+   firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+   end
+   end
+  end)
+      end
+  end
+end)
+			plr.Character.Head:Destroy()
+		end
+	end)
+end
+
+spawn(function()
+     pcall(function()
+     while true do
+     wait(.0)
+     game.Players.LocalPlayer.Character.Humanoid.Health = 999999
+            end
+        end)
+    end)
+    
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v.ClassName == "Accessory" then
+            v:Destroy()
+        end
+    end
+    
+    game.Players.LocalPlayer.Character.Pants:Destroy()
+    game.Players.LocalPlayer.Character.Animate.Disabled = true
