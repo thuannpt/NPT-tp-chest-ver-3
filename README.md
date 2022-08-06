@@ -1,1 +1,0 @@
-# NPT-tp-chest-ver-3
